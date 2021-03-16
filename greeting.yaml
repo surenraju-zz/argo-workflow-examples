@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow                  # new type of k8s spec
+metadata:
+  generateName: greeting-       # name of the workflow spec
+spec:
+  entrypoint: greeting          # invoke the greeting template
+  templates:
+  - name: greeting              # name of the template
+    container:
+      image: surenraju/greeting-svc:1.0.0
+    metadata:
+      annotations:
+         prometheus.io/scrape: 'true'
+         prometheus.io/path: '/metrics'
+         prometheus.io/port: '8080'
